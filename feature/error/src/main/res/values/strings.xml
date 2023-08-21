@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="some_supermind_broke_everything">Какой-то сверхразум всё сломал</string>
+    <string name="we_will_try_to_fix_it_quickly">Постараемся быстро починить</string>
+    <string name="try_again">Попробовать снова</string>
+</resources>

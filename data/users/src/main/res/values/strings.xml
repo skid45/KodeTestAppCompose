@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_error">Не могу обновить данные.\nЧто-то пошло не так.</string>
+    <string name="network_error">Не могу обновить данные.\nПроверь соединение с интернетом.</string>
+    <string name="user_not_found">Пользователь не найден</string>
+</resources>

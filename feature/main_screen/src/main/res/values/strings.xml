@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_field_hint">Введите имя, тэг, почту…</string>
+    <string name="cancel">Отмена</string>
+    <string name="sorting">Сортировка</string>
+    <string name="we_didnt_find_anyone">Мы никого не нашли</string>
+    <string name="try_to_adjust_the_request">Попробуй скорректировать запрос</string>
+    <string name="wait_a_second_im_loading_up">Секундочку, гружусь…</string>
+
+    <string-array name="departments">
+        <item>Все</item>
+        <item>Дизайн</item>
+        <item>Аналитика</item>
+        <item>Менеджмент</item>
+        <item>iOS</item>
+        <item>Android</item>
+        <item>QA</item>
+        <item>Бэк-офис</item>
+        <item>Frontend</item>
+        <item>HR</item>
+        <item>PR</item>
+        <item>Backend</item>
+        <item>Техподдержка</item>
+    </string-array>
+</resources>
