@@ -186,9 +186,12 @@ fun MainScreen(
 
     val loadingSnackbarText = stringResource(R.string.wait_a_second_im_loading_up)
     LaunchedEffect(state.isRefresh) {
-        if (state.isRefresh) {
+        if (state.isRefresh && state.networkError == null) {
             snackbarColor = loadSnackbarColor
-            snackbarHostState.showSnackbar(message = loadingSnackbarText)
+            snackbarHostState.showSnackbar(
+                message = loadingSnackbarText,
+                duration = SnackbarDuration.Indefinite
+            )
         }
     }
 

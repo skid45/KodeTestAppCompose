@@ -1,6 +1,5 @@
 package com.skid.main_screen.ui
 
-import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,7 +21,7 @@ class MainScreenViewModel @Inject constructor(
     private val _state = MutableStateFlow(MainScreenUiState())
     val state get() = _state.asStateFlow()
 
-    private var previousStates: Pair<MainScreenUiState?, MainScreenUiState?> = null to null
+    private var previousState: MainScreenUiState? = null
 
     fun onEvent(event: MainScreenEvent) {
         when (event) {
@@ -38,37 +37,37 @@ class MainScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _state.collect { uiState ->
-                previousStates = previousStates.second to uiState
-                val result = getFilteredAndSortedUsersUseCase(
-                    query = uiState.query,
-                    sortBy = uiState.sortBy,
-                    refresh = uiState.isRefresh
-                )
-                Log.d("TAG", "uiState: $uiState")
-                if (result.isSuccess) {
-                    val userList = result.getOrNull()!!
-                    val networkError = if (
-                        previousStates.second?.networkError != null &&
-                        userList == previousStates.second?.userList &&
-                        previousStates.first?.networkError == null
-                    ) previousStates.second?.networkError
-                    else null
+                if (
+                    previousState == null ||
+                    previousState?.isRefresh != uiState.isRefresh ||
+                    previousState?.query != uiState.query ||
+                    previousState?.sortBy != uiState.sortBy
+                ) {
+                    val result = getFilteredAndSortedUsersUseCase(
+                        query = uiState.query,
+                        sortBy = uiState.sortBy,
+                        refresh = uiState.isRefresh
+                    )
 
-                    _state.update {
-                        it.copy(
-                            userList = userList,
-                            networkError = networkError,
-                            isRefresh = false
-                        )
-                    }
-                } else {
-                    _state.update {
-                        it.copy(
-                            networkError = result.exceptionOrNull()?.localizedMessage,
-                            isRefresh = false
-                        )
+                    if (result.isSuccess) {
+                        _state.update {
+                            it.copy(
+                                userList = result.getOrNull()!!,
+                                networkError = uiState.networkError,
+                                isRefresh = false
+                            )
+                        }
+                    } else {
+                        _state.update {
+                            it.copy(
+                                networkError = result.exceptionOrNull()?.localizedMessage,
+                                isRefresh = false
+                            )
+                        }
                     }
                 }
+
+                previousState = uiState
             }
         }
     }
